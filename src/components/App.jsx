@@ -5,6 +5,7 @@ import ImageGallery from './ImageGallery';
 import Loader from './Loader';
 import Button from './Button';
 import Modal from './Modal';
+import styles from './App.module.css';
 
 export default class App extends Component {
   state = {
@@ -48,10 +49,7 @@ export default class App extends Component {
         }));
 
         if (!this.state.firstFetch) {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          });
+          this.handleScroll();
         }
       })
       .catch(error => this.setState({ error }))
@@ -63,29 +61,31 @@ export default class App extends Component {
       });
   };
 
+  handleScroll = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   openModal = imageUrl => {
     this.setState({ modalImage: imageUrl });
   };
 
-  closeModal = e => {
+  closeModal = () => {
     this.setState({ modalImage: null });
   };
 
   render() {
     const { images, loading, modalImage } = this.state;
     return (
-      <div>
+      <div className={styles.container}>
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery images={images} onClick={this.openModal} />
         {modalImage && <Modal largeImage={modalImage} onClose={this.closeModal} />}
         {loading && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Loader type="ThreeDots" color="#a2fb48" height={150} width={150} />
+          <div className={styles.loader}>
+            <Loader type="ThreeDots" color="rgba(0, 21, 255, 0.7)" height={120} width={120} />
           </div>
         )}
         {images.length > 0 && !loading && <Button onClick={this.fetchImages} />}

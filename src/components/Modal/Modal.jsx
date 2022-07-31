@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
+
+const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
   componentDidMount() {
@@ -26,12 +29,13 @@ class Modal extends Component {
   render() {
     const { largeImage } = this.props;
 
-    return (
+    return createPortal(
       <div className={styles.backdrop} onClick={this.clickBackdrop}>
         <div className={styles.modal}>
           <img src={largeImage} alt="" />
         </div>
-      </div>
+      </div>,
+      modalRoot
     );
   }
 }
