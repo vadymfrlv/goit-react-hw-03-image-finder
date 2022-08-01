@@ -85,7 +85,7 @@ export default class App extends Component {
         {modalImage && <Modal largeImage={modalImage} onClose={this.closeModal} />}
         {loading && (
           <div className={styles.loader}>
-            <Loader type="ThreeDots" color="rgba(0, 21, 255, 0.7)" height={120} width={120} />
+            <Loader />
           </div>
         )}
         {images.length > 0 && !loading && <Button onClick={this.fetchImages} />}

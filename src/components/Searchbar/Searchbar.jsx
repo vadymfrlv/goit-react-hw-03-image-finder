@@ -8,17 +8,19 @@ class Searchbar extends Component {
   };
 
   handleChange = evt => {
-    this.setState({ inputValue: evt.currentTarget.value });
+    const value = evt.currentTarget.value.trimStart();
+    this.setState({ inputValue: value });
   };
 
   handleSubmit = evt => {
     evt.preventDefault();
-
     this.props.onSubmit(this.state.inputValue);
     this.setState({ inputValue: '' });
   };
 
   render() {
+    const { inputValue } = this.state;
+
     return (
       <header className={styles.header}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
@@ -29,7 +31,7 @@ class Searchbar extends Component {
           <input
             className={styles.from__input}
             type="text"
-            value={this.state.inputValue}
+            value={inputValue}
             onChange={this.handleChange}
             autoComplete="off"
             autoFocus
