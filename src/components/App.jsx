@@ -14,7 +14,6 @@ export default class App extends Component {
     images: [],
     loading: false,
     modalImage: null,
-    firstFetch: true,
     error: null,
   };
 
@@ -23,7 +22,6 @@ export default class App extends Component {
       searchQuery: query,
       images: [],
       page: 1,
-      firstFetch: true,
     });
   };
 
@@ -33,7 +31,7 @@ export default class App extends Component {
 
     prevQuery !== nextQuery && this.fetchImages();
 
-    if (!this.state.firstFetch) {
+    if (this.state.page > 2) {
       this.handleScroll();
     }
   }
@@ -56,7 +54,6 @@ export default class App extends Component {
       .finally(() => {
         this.setState({
           loading: false,
-          firstFetch: false,
         });
       });
   };
