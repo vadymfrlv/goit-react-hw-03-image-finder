@@ -32,6 +32,10 @@ export default class App extends Component {
     const nextQuery = this.state.searchQuery;
 
     prevQuery !== nextQuery && this.fetchImages();
+
+    if (!this.state.firstFetch) {
+      this.handleScroll();
+    }
   }
 
   fetchImages = () => {
@@ -47,10 +51,6 @@ export default class App extends Component {
           images: [...prevState.images, ...images],
           page: prevState.page + 1,
         }));
-
-        if (!this.state.firstFetch) {
-          this.handleScroll();
-        }
       })
       .catch(error => this.setState({ error }))
       .finally(() => {
